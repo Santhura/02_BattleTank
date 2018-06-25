@@ -29,7 +29,7 @@ void ATank::Tick(float DeltaTime)
 
 void ATank::AimAt( FVector hitLocation )
 {
-	tankAimingComponent->AimAt( hitLocation );
+	tankAimingComponent->AimAt( hitLocation, launchSpeed );
 }
 
 void ATank::BarrelReference( UStaticMeshComponent * barrelToSet )
