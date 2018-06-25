@@ -6,10 +6,21 @@
 
 void ATankAIController::BeginPlay()
 {
+	Super::BeginPlay();
 	auto playerTank = GetPlayerTank();
 	PrintTank( playerTank, true );
 }
 
+
+void ATankAIController::Tick( float deltaTime )
+{
+	Super::Tick( deltaTime );
+	if( GetPlayerTank() )
+	{
+		// aim towards the player
+		GetControlledTank()->AimAt( GetPlayerTank()->GetActorLocation() );
+	}
+}
 
 ATank *ATankAIController::GetControlledTank() const
 {
