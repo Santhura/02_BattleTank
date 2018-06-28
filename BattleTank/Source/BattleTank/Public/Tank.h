@@ -27,14 +27,16 @@ protected:
 	UTankAimingComponent* tankAimingComponent = nullptr;
 
 public:	
-
-	void AimAt( FVector hitLocation );
-
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void BarrelReference( UTankBarrel * barrelToSet );
 
 	UFUNCTION( BlueprintCallable, Category = Setup )
 	void TurretReference( UTankTurret* turretToSet );
+
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+
+	void AimAt( FVector hitLocation );
 
 private:
 	
