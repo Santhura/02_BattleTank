@@ -9,6 +9,7 @@
 // forward Declaration
 class UTankBarrel;
 class UTankAimingComponent;
+class UTankTurret;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -32,12 +33,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void BarrelReference( UTankBarrel * barrelToSet );
 
+	UFUNCTION( BlueprintCallable, Category = Setup )
+	void TurretReference( UTankTurret* turretToSet );
+
 private:
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY( EditAnywhere, Category = Firing )
-		float launchSpeed = 100000; // TODO find sensible default
+		float launchSpeed = 5000; // TODO find sensible default
 	
 };
