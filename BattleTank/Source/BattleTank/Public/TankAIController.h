@@ -22,5 +22,7 @@ public:
 	virtual void Tick( float deltaTime ) override;
 
 private:
-
+	// How close can the AI tank to the player
+	UPROPERTY( EditDefaultsOnly )
+	float acceptanceRadius = 3000.f;
 };
