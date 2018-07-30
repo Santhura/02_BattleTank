@@ -19,7 +19,9 @@ void UTankMovementComponent::RequestDirectMove( const FVector & MoveVelocity, bo
 
 	auto forwardThrow = FVector::DotProduct( tankForward, AIForwardIntention );
 	IntendMoveForward( forwardThrow );
-	//UE_LOG( LogTemp, Warning, TEXT( "%s vectoring to %s" ), *name, *moveVelocityString);
+
+	auto rightThrow = FVector::CrossProduct( tankForward, AIForwardIntention ).Z;
+	IntendTurnRight( rightThrow );
 }
 
 void UTankMovementComponent::IntendMoveForward( float Throw )
@@ -27,7 +29,6 @@ void UTankMovementComponent::IntendMoveForward( float Throw )
 	if( !leftTrack || !rightTrack ) { return; }
 	leftTrack->SetThrottle( Throw );
 	rightTrack->SetThrottle( Throw );
-	//TODO prevent double speed due to dual control
 }
 
 void UTankMovementComponent::IntendTurnRight( float Throw )
@@ -35,5 +36,4 @@ void UTankMovementComponent::IntendTurnRight( float Throw )
 	if( !leftTrack || !rightTrack ) { return; }
 	leftTrack->SetThrottle( Throw );
 	rightTrack->SetThrottle( -Throw );
-	//TODO prevent double speed due to dual control
 }
