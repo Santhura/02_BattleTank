@@ -8,7 +8,6 @@
 
 // forward Declaration
 class UTankBarrel;
-class UTankAimingComponent;
 class UTankTurret;
 class AProjectile;
 
@@ -25,24 +24,18 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY( BlueprintReadOnly )
-	UTankAimingComponent* tankAimingComponent = nullptr;
 
 public:	
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
-	void AimAt( FVector hitLocation );
 
 private:
 	
 	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
 	TSubclassOf<AProjectile> projecttileBlueprint;
 
-	//TODO remove once firing is moved to aiming component
-	UPROPERTY( EditAnywhere, Category = "Firing" )
-	float launchSpeed = 5000;
 
 	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
 	float reloadTimeInSeconds = 3.f;

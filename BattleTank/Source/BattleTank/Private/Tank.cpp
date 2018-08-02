@@ -3,7 +3,6 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
 #include "Engine/World.h"
 
 
@@ -18,16 +17,8 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // needed for BP beginplay!
-
-	tankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
-void ATank::AimAt( FVector hitLocation )
-{
-	if( !ensure(tankAimingComponent )) { return; }
-	tankAimingComponent->AimAt( hitLocation, launchSpeed );
-	
-}
 
 void ATank::Fire()
 {
@@ -40,7 +31,7 @@ void ATank::Fire()
 		auto projectile = GetWorld()->SpawnActor<AProjectile>( projecttileBlueprint,
 															   barrel->GetSocketLocation( FName( "Projectile" ) ),
 															   barrel->GetSocketRotation( FName( "Projectile" ) ) );
-		projectile->LaunchProjectile( launchSpeed );
+		projectile->LaunchProjectile( 5000 );
 		lastFireTime = FPlatformTime::Seconds();
 	}
 }

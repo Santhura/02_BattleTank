@@ -29,7 +29,7 @@ UTankBarrel* UTankAimingComponent::GetBarrelReference()
 	return barrel;
 }
 
-void UTankAimingComponent::AimAt( FVector hitLocation, float launchSpeed )
+void UTankAimingComponent::AimAt( FVector hitLocation)
 {
 	if( !ensure(barrel) ) { return; }
 	FVector outLaunchVelocity;
