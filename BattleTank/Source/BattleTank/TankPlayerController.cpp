@@ -3,20 +3,20 @@
 #include "TankPlayerController.h"
 #include "Tank.h"
 #include "Engine/World.h"
+#include "TankAimingComponent.h"
 #include "Camera/PlayerCameraManager.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG( LogTemp, Warning, TEXT( "Player controller begin play" ) );
-	auto controlledTank = GetControlledTank();
-	if( controlledTank )
+	auto aimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if( aimingComponent )
 	{
-		UE_LOG( LogTemp, Warning, TEXT( "%s PlayerController" ), *controlledTank->GetName() );
+		FoundAimingComponent( aimingComponent );
 	}
 	else
 	{
-		UE_LOG( LogTemp, Warning, TEXT( "PlayerController not possesing a tank" ));
+		UE_LOG( LogTemp, Warning, TEXT( "Player controller can't find aiming component at begin play" ) );
 	}
 }
 
@@ -31,6 +31,7 @@ ATank * ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>( GetPawn() );
 }
+
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
