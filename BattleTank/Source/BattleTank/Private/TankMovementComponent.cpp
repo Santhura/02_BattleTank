@@ -26,14 +26,14 @@ void UTankMovementComponent::RequestDirectMove( const FVector & MoveVelocity, bo
 
 void UTankMovementComponent::IntendMoveForward( float Throw )
 {
-	if( !leftTrack || !rightTrack ) { return; }
+	if(!ensure( leftTrack && rightTrack) ) { return; }
 	leftTrack->SetThrottle( Throw );
 	rightTrack->SetThrottle( Throw );
 }
 
 void UTankMovementComponent::IntendTurnRight( float Throw )
 {
-	if( !leftTrack || !rightTrack ) { return; }
+	if( !ensure( leftTrack && rightTrack ) ) { return; }
 	leftTrack->SetThrottle( Throw );
 	rightTrack->SetThrottle( -Throw );
 }
