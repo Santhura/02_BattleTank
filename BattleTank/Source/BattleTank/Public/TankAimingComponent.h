@@ -33,6 +33,9 @@ public:
 	UTankBarrel *GetBarrelReference();
 
 public:	
+	virtual void BeginPlay() override;
+	virtual void TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
+
 	void AimAt( FVector hitLocation );
 
 	UFUNCTION( BlueprintCallable, Category = "Firing" )
@@ -40,11 +43,12 @@ public:
 
 protected:
 	UPROPERTY( BlueprintReadOnly, Category = "State" )
-	EFiringState firingState = EFiringState::Locked;
+	EFiringState firingState = EFiringState::Reloading;
 
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
+
 
 	void MoveBarrelTowards( FVector aimDirection );
 
