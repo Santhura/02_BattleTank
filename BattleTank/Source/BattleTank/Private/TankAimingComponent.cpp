@@ -23,23 +23,26 @@ void UTankAimingComponent::BeginPlay()
 	lastFireTime = FPlatformTime::Seconds();
 }
 
-
-void UTankAimingComponent::TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction )
-{
-	UE_LOG( LogTemp, Warning, TEXT( "Donkey: test tick aiming component" ) );
-
-	if( ( FPlatformTime::Seconds() - lastFireTime ) > reloadTimeInSeconds )
-	{
-		firingState = EFiringState::Reloading;
-	}
-
-	// TODO Handle aiming and locked states
-}
-
 void UTankAimingComponent::Initialise( UTankBarrel* barrelToSet, UTankTurret * turretToSet )
 {
 	barrel = barrelToSet;
 	turret = turretToSet;
+}
+
+void UTankAimingComponent::TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction )
+{
+	if( ( FPlatformTime::Seconds() - lastFireTime ) < reloadTimeInSeconds )
+	{
+		firingState = EFiringState::Reloading;
+	}
+	else if( IsBarrelMoving() )
+	{
+		firingState = EFiringState::Aiming;
+	}
+	else
+	{
+		firingState = EFiringState::Locked;
+	}
 }
 
 UTankBarrel* UTankAimingComponent::GetBarrelReference()
@@ -67,15 +70,11 @@ void UTankAimingComponent::AimAt( FVector hitLocation)
 	// Calculate the outLaunchVelocity
 	if( bHaveAimSolution )
 	{
-		auto aimDireciton = outLaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(aimDireciton);
-		//auto time = GetWorld()->GetTimeSeconds();
-		//UE_LOG( LogTemp, Warning, TEXT( "%f: Aim solution found" ), time);
+		aimDirection = outLaunchVelocity.GetSafeNormal();
+		MoveBarrelTowards(aimDirection);
 	}
 	else
 	{
-		//auto time = GetWorld()->GetTimeSeconds();
-		//UE_LOG( LogTemp, Warning, TEXT( "%f: No aim solve found" ), time );
 
 	}
 }
@@ -93,12 +92,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 	turret->Rotate( deltaRotator.Yaw );
 }
 
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if( !ensure( barrel ) ) { return false; }
+	auto barrelForward = barrel->GetForwardVector();
+	return !barrelForward.Equals(aimDirection, 0.01f);
+}
+
 void UTankAimingComponent::Fire()
 {
 	if( firingState != EFiringState::Reloading )
 	{
-
-
 		// spawn projectile at the socket location
 		if( !ensure( barrel ) ) { return; }
 		if( !ensure( projecttileBlueprint ) ) { return; }
