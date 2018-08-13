@@ -30,8 +30,6 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "Setup" )
 	void Initialise( UTankBarrel* barrelToSet, UTankTurret * turretToSet );
 
-	UTankBarrel *GetBarrelReference();
-
 public:	
 	virtual void BeginPlay() override;
 	virtual void TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
@@ -40,6 +38,8 @@ public:
 
 	UFUNCTION( BlueprintCallable, Category = "Firing" )
 	void Fire();
+
+	EFiringState GetFiringState() const;
 
 protected:
 	UPROPERTY( BlueprintReadOnly, Category = "State" )

@@ -45,9 +45,9 @@ void UTankAimingComponent::TickComponent( float DeltaTime, enum ELevelTick TickT
 	}
 }
 
-UTankBarrel* UTankAimingComponent::GetBarrelReference()
+EFiringState UTankAimingComponent::GetFiringState() const
 {
-	return barrel;
+	return firingState;
 }
 
 void UTankAimingComponent::AimAt( FVector hitLocation)
@@ -117,3 +117,5 @@ void UTankAimingComponent::Fire()
 		lastFireTime = FPlatformTime::Seconds();
 	}
 }
+
+
