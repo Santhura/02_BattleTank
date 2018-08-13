@@ -89,6 +89,10 @@ void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection)
 	auto deltaRotator = aimAsRotator - barrelRotation;
 
 	barrel->Elevate(deltaRotator.Pitch);
+
+	if( FMath::Abs(deltaRotator.Yaw ) > 180)
+		deltaRotator.Yaw = -deltaRotator.Yaw;
+
 	turret->Rotate( deltaRotator.Yaw );
 }
 
@@ -109,7 +113,7 @@ void UTankAimingComponent::Fire()
 		auto projectile = GetWorld()->SpawnActor<AProjectile>( projecttileBlueprint,
 															   barrel->GetSocketLocation( FName( "Projectile" ) ),
 															   barrel->GetSocketRotation( FName( "Projectile" ) ) );
-		projectile->LaunchProjectile( 5000 );
+		projectile->LaunchProjectile( launchSpeed );
 		lastFireTime = FPlatformTime::Seconds();
 	}
 }

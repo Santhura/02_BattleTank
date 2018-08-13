@@ -26,7 +26,14 @@ public:
 
 private:
 	UTankTrack();
-	virtual void TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
+
+	void ApplySidewaysForce( );
+	void DrivingTrack();
+
+	UFUNCTION()
+	void OnHit( UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit );
 
 	UStaticMeshComponent* tankRoot = nullptr;
+	float currentThrottle = 0;
+
 };
