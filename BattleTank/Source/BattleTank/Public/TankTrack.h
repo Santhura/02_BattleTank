@@ -22,4 +22,11 @@ public:
 	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
 		float trackMaxDrivingForce = 400000; // assume 40 ton tank, and 1g acceleration
 
+	virtual void BeginPlay() override;
+
+private:
+	UTankTrack();
+	virtual void TickComponent( float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction ) override;
+
+	UStaticMeshComponent* tankRoot = nullptr;
 };
