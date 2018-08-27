@@ -43,7 +43,7 @@ public:
 	EFiringState GetFiringState() const;
 
 	UFUNCTION( BlueprintCallable, Category = "Firing" )
-	int GetAmmoAmount() const;
+	int32 GetAmmoAmount() const;
 
 protected:
 	UPROPERTY( BlueprintReadOnly, Category = "State" )
@@ -64,12 +64,13 @@ private:
 	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
 	float reloadTimeInSeconds = 3.f;
 
-	double lastFireTime = 0;
+	UPROPERTY( EditDefaultsOnly, Category = "Firing" )
+	int32 ammoAmount = 3;
 
 	UPROPERTY( EditAnywhere, Category = "Firing" )
 	float launchSpeed = 5000;
 
 	FVector aimDirection = FVector( 0 );
+	double lastFireTime = 0;
 
-	int ammoAmount = 3;
 };
