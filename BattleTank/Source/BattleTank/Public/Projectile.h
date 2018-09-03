@@ -33,8 +33,8 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent * collisionMesh = nullptr;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UParticleSystemComponent * launchBlast = nullptr;
+	UPROPERTY( EditDefaultsOnly, Category = "Components" )
+		UParticleSystemComponent * launchBlast = nullptr;
 
 	UProjectileMovementComponent * projectileMovement = nullptr;
 
