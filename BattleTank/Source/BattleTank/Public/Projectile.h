@@ -23,9 +23,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 
 	void LaunchProjectile( float speed );
 
@@ -34,8 +31,15 @@ private:
 	UStaticMeshComponent * collisionMesh = nullptr;
 
 	UPROPERTY( EditDefaultsOnly, Category = "Components" )
-		UParticleSystemComponent * launchBlast = nullptr;
+	UParticleSystemComponent * launchBlast = nullptr;
+
+	UPROPERTY( EditDefaultsOnly, Category = "Components" )
+	UParticleSystemComponent * impactBlast = nullptr;
 
 	UProjectileMovementComponent * projectileMovement = nullptr;
+
+
+	UFUNCTION()
+		void OnHit( UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit );
 
 };
