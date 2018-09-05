@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+#include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 
 
@@ -23,6 +24,9 @@ AProjectile::AProjectile()
 	impactBlast = CreateDefaultSubobject<UParticleSystemComponent>( FName( "impact blast" ) );
 	impactBlast->AttachToComponent( RootComponent, FAttachmentTransformRules::KeepRelativeTransform );
 	impactBlast->bAutoActivate = false;
+
+	explosionForce = CreateDefaultSubobject<URadialForceComponent>( FName( "Explosion Force" ) );
+	explosionForce->AttachToComponent( RootComponent, FAttachmentTransformRules::KeepRelativeTransform );
 
 	projectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>( FName( "projectile Movement" ) );
 	projectileMovement->bAutoActivate = false;
@@ -45,5 +49,6 @@ void AProjectile::OnHit( UPrimitiveComponent * hitComponent, AActor * otherActor
 {
 	launchBlast->Deactivate();
 	impactBlast->Activate();
+	explosionForce->FireImpulse();
 }
 
