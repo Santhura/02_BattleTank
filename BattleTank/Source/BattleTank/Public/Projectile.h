@@ -43,6 +43,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float destroyDelay = 10.f;
 
+	UPROPERTY( EditDefaultsOnly, Category = "Setup" )
+		float projectileDamage = 20;
+
 	UProjectileMovementComponent * projectileMovement = nullptr;
 
 

@@ -2,11 +2,12 @@
 
 #include "Projectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
-#include "Runtime/Engine/Classes/PhysicsEngine/RadialForceComponent.h"
-#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
-#include "Runtime/Engine/Classes/Engine/World.h"
-#include "Runtime/Engine/Public/TimerManager.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
+#include "Public/TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -55,6 +56,15 @@ void AProjectile::OnHit( UPrimitiveComponent * hitComponent, AActor * otherActor
 
 	SetRootComponent( impactBlast );
 	collisionMesh->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		projectileDamage,
+		GetActorLocation(),
+		explosionForce->Radius,// for consistancy
+		UDamageType::StaticClass(),
+		TArray<AActor*>() // damage all actors
+	);
 
 	FTimerHandle timer;
 	GetWorld()->GetTimerManager().SetTimer( timer, this, &AProjectile::OnTimerExpire, destroyDelay, false );
