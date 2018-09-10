@@ -40,10 +40,15 @@ private:
 	UPROPERTY( EditDefaultsOnly, Category = "Components" )
 	URadialForceComponent * explosionForce = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float destroyDelay = 10.f;
+
 	UProjectileMovementComponent * projectileMovement = nullptr;
 
 
 	UFUNCTION()
 		void OnHit( UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit );
+
+	void OnTimerExpire();
 
 };
