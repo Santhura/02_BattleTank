@@ -11,6 +11,12 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	currentHealth = startingHealth;
+}
+
 float ATank::TakeDamage( float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser )
 {
 	int32 damagePoints = FPlatformMath::RoundToInt( DamageAmount );
@@ -19,7 +25,7 @@ float ATank::TakeDamage( float DamageAmount, FDamageEvent const & DamageEvent, A
 	currentHealth -= damageToApply;
 	if( currentHealth <= 0 )
 	{
-		UE_LOG( LogTemp, Warning, TEXT( "Tank Died" ));
+		OnDeath.Broadcast();
 	}
 	return damageToApply;
 }
