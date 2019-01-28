@@ -20,7 +20,11 @@ void ATankPlayerController::BeginPlay()
 void ATankPlayerController::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
-	AimTowardsCrosshair();
+	auto currentHealth = Cast<ATank>(GetPawn())->GetCurrentHealth();
+	if(currentHealth  > 0 )
+	{
+		AimTowardsCrosshair();
+	}
 }
 
 
@@ -44,6 +48,7 @@ void ATankPlayerController::OnPossessedTankDeath()
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	
 	auto aimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if( !ensure( aimingComponent ) ) { return; }
 
@@ -94,7 +99,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FVec
 		hit, 
 		startLocation, 
 		endLocation, 
-		ECollisionChannel::ECC_Visibility ) )
+		ECollisionChannel::ECC_Camera ) )
 	{
 		hitLocation = hit.Location;
 		return true;

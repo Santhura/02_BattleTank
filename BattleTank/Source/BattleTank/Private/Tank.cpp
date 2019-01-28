@@ -34,3 +34,8 @@ float ATank::GetHealthPercent() const
 {
 	return (float) currentHealth / (float) startingHealth;
 }
+
+float ATank::GetCurrentHealth() const
+{
+	return currentHealth;
+}

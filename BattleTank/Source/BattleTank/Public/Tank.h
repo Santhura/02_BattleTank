@@ -25,6 +25,8 @@ public:
 	// returns current health as a percentage of starting healthf, between 0 and 1
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercent() const;
+	UFUNCTION( )
+	float GetCurrentHealth() const;
 
 	FTankDelegate OnDeath;
 
